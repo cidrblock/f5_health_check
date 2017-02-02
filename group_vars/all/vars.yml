@@ -1,0 +1,20 @@
+collect_stats:
+- address_class
+- certificate
+- client_ssl_profile
+- device
+- device_group
+- interface
+- key
+- node
+- pool
+- provision
+- rule
+- self_ip
+- software
+- system_info
+- traffic_group
+- trunk
+- virtual_address
+- virtual_server
+- vlan

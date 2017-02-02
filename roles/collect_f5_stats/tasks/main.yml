@@ -1,0 +1,7 @@
+
+- name: Ensures {{ inventory_hostname }} directory exists
+  file: path=stats/{{inventory_hostname}} state=directory
+  
+- name: Collect a single stat and write to a file
+  include: collect_and_write.yml
+  with_items: "{{ collect_stats }}"

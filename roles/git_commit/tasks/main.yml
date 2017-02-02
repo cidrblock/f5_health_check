@@ -1,0 +1,19 @@
+
+- name: add all files
+  command: git add *
+  args:
+    chdir: "{{ playbook_dir}}"
+  delegate_to: localhost
+  changed_when: False
+- name: commit
+  command: git -c user.name="{{ lookup('env','ANSIBLE_GIT_USERNAME') }}" -c user.email="{{ lookup('env','ANSIBLE_GIT_EMAIL') }}" commit -m'Ansible' --allow-empty
+  args:
+    chdir: "{{ playbook_dir}}"
+  delegate_to: localhost
+  changed_when: False
+- name: push
+  command: git push origin HEAD:master
+  args:
+    chdir: "{{ playbook_dir}}"
+  delegate_to: localhost
+  changed_when: False

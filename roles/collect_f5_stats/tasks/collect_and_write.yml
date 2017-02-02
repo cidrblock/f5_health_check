@@ -1,0 +1,18 @@
+- name: "Collecting BIG-IP facts: ({{ item }})"
+  bigip_facts:
+      server: "{{ inventory_hostname }}"
+      user: "{{ lookup('env','ANSIBLE_F5_USERNAME') }}"
+      password: "{{ lookup('env','ANSIBLE_F5_PASSWORD') }}"
+      include: "{{ item }}"
+      validate_certs: False
+  delegate_to: localhost
+  ignore_errors: yes
+  register: stat_collected
+
+- name: "Writing BIG-IP facts: ({{ item }}) success"
+  local_action: copy content={{ hostvars[inventory_hostname][item]|to_yaml }} dest=stats/{{ inventory_hostname }}/{{ item }}.yml
+  when: stat_collected|succeeded
+
+- name: "Writing BIG-IP facts: ({{ item }}) failed"
+  local_action: copy content="collection failed" dest=stats/{{ inventory_hostname }}/{{ item }}.yml
+  when: stat_collected|failed
